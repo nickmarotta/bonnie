@@ -1,6 +1,7 @@
 
 /node_modules/*
 /ngrok/*
+/config.json
 
 # OS generated files #
 ######################
