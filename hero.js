@@ -37,6 +37,9 @@ async function initializeClient() {
         console.log("No connetion active to stop.");
       }
       return;
+    } else if (message.content.startsWith(`${prefix}hero`)) {
+        playINeedAHero();
+      return;
     } else {
       message.channel.send("You need to enter a valid command!");
     }
