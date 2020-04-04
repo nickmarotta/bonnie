@@ -9,7 +9,6 @@ const app = express()
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
-
 // Route that receives a POST request to /example-post
 app.post('/example-post', function (req, res) {
   const body = req.body
@@ -18,11 +17,17 @@ app.post('/example-post', function (req, res) {
   res.send(`t `)
 })
 
-// Route that receives a GET request to /example-post
+// Route that receives a GET request to /hero
 app.get('/hero', function (req, res) {
   discord.iNeedAHero();
   res.set('Content-Type', 'text/plain')
   res.send(`I've got 5 jabronis, comin' right up.`)
+})
+
+// HealthCheck
+app.get('/ping', function (req, res) {
+  res.set('Content-Type', 'text/plain')
+  res.send(`pong`)
 })
 
 // Tell our app to listen on port 1800
