@@ -8,7 +8,7 @@ RUN apt-get update -yq \
     && apt-get install nodejs -yq
 RUN npm install    
 EXPOSE 1800
-CMD [ "node", "express-server.js" ]
+CMD [ "node", "src/express-server.js" ]
 
 
 #Connect to docker container from windows by using 192.168.99.100 instead of localhost
