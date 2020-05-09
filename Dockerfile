@@ -23,4 +23,4 @@ CMD [ "node", "src/express-server.js" ]
 #docker exec -it $1 /bin/sh
 
 # Get Auth Command 
-# aws ecr get-login --no-include-email --region us-east-1
+# aws ecr get-login --no-include-email --region us-east-2
