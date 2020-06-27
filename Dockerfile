@@ -1,11 +1,7 @@
-FROM ubuntu
+FROM nickmarotta/ubuntu-node:latest 
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 COPY . .
-RUN apt-get update -yq \
-    && apt-get install curl gnupg -yq \
-    && curl -sL https://deb.nodesource.com/setup_12.x | bash \
-    && apt-get install nodejs -yq
 RUN npm install    
 EXPOSE 1800
 CMD [ "node", "src/express-server.js" ]
@@ -24,3 +20,7 @@ CMD [ "node", "src/express-server.js" ]
 
 # Get Auth Command 
 # aws ecr get-login --no-include-email --region us-east-2
+
+# Force New Deployment 
+#   - this sort of works but the task needed to be stopped first, which i did in the console. 
+#  aws ecs update-service --force-new-deployment --service bonnie-service --region us-east-2 --cluster bonnie-cluster
