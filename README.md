@@ -18,15 +18,27 @@ In order for the app to function, it needs to have a `src/config.json` file popu
 
 ## Deploy 
 
-
-
 // Google didn't really work out. MOving to Vultr hosting and doing it myself. Going to host the images docker hub /shrug. 
+
+Prep for deploy with this: 
+```sh
+docker build -t nickmarotta/bonnie .
+```
 
 Push the image with 
 ```shell
 docker push nickmarotta/bonnie:tagname
 ```
 
+Login to the hosted server and start pull the fresh container with 
+```sh
+docker pull nickmarotta/bonnie
+```
+
+Start the container on the server with 
+```sh
+docker run -d -p 1800:1800 nickmarotta/bonnie
+```
 
 
 // ********************
