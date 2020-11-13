@@ -6,6 +6,7 @@ const client = new Discord.Client();
 
 const heroSongPath = './resources/i_need_a_hero.mp3';
 const guileSongPath = './resources/guile.mp3';
+const chariotsSongPath = './resources/chariots.mp3';
 
 var clientInitialized = false;
 var allowGuileWhenSteveConnects = false; 
@@ -35,6 +36,9 @@ exports.initializeClient = async () => {
         return;
     } else if (message.content.startsWith(`${prefix}guile`)) {
         playMp3(guileSongPath);
+        return;
+    } else if (message.content.startsWith(`${prefix}chariots`)) {
+        playMp3(chariotsSongPath);
         return;
     } else if (message.content.startsWith(`${prefix}steve`)) {
         const splitArr = message.content.split(' ');
