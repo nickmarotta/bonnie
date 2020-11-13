@@ -1,6 +1,7 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const discord = require('./poorDiplomacy')
+const songPaths = require('./utilities/song-paths.json')
 
 // Create a new instance of express
 const app = express()
@@ -19,7 +20,7 @@ app.post('/example-post', function (req, res) {
 
 // Route that receives a GET request to /hero
 app.get('/hero', function (req, res) {
-  discord.playINeedAHero(); 
+  discord.playMp3(songPaths.hero); 
   res.set('Content-Type', 'text/plain')
   res.send(`I've got 5 jabronis, comin' right up.`)
 })

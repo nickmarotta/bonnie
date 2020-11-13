@@ -1,11 +1,12 @@
 
 const Discord = require("discord.js");
 const { prefix, token } = require("./config.json");
+const { playMp3, stopPlaying } = require("./utilities/music-player.js");
 const songPaths = require("./utilities/song-paths.json");
 
 const client = new Discord.Client();
 
-var clientInitialized = false;
+var shlandsWaitingRoom;
 var allowGuileWhenSteveConnects = false; 
 var voiceConnection;  
 
@@ -29,13 +30,13 @@ exports.initializeClient = async () => {
         stopPlaying();
         return;
     } else if (message.content.startsWith(`${prefix}hero`)) {
-        playMp3(songPaths.hero);
+        voiceConnection = playMp3(songPaths.hero, shlandsWaitingRoom);
         return;
     } else if (message.content.startsWith(`${prefix}guile`)) {
-        playMp3(songPaths.guile);
+        voiceConnection = playMp3(songPaths.guile, shlandsWaitingRoom);
         return;
     } else if (message.content.startsWith(`${prefix}chariots`)) {
-        playMp3(songPaths.chariots);
+        voiceConnection = playMp3(songPaths.chariots, shlandsWaitingRoom);
         return;
     } else if (message.content.startsWith(`${prefix}steve`)) {
         const splitArr = message.content.split(' ');
@@ -52,40 +53,11 @@ exports.initializeClient = async () => {
   });
 
   await client.login(token);
-  clientInitialized = true; 
+
+  //Instantiates the channel object for the first channel we have on the server
+  shlandsWaitingRoom = await client.channels.fetch("222587777529675777");
+
 }
-
-async function playMp3(mp3Path) {
-  //instantiates the channel object for "Home"
-  const voiceChannel = await client.channels.fetch("222587777529675777");
-
-  try {
-    voiceConnection = await voiceChannel.join();
-    const dispatcher = voiceConnection
-    .play(mp3Path)
-    .on("finish", () => {
-      console.log(mp3Path);
-      voiceChannel.leave();
-    })
-    .on("error", error => {
-        console.error(error);
-        voiceChannel.leave();
-    });
-  } catch (err) {
-    console.log(err);
-    return voiceChannel.send(err);
-  }
-}
-
-async function stopPlaying() {
-  if (voiceConnection) {
-    voiceConnection.dispatcher.end();
-    voiceConnection = null;
-  } else {
-    console.log("No connetion active to stop.");
-  }
-}
-
 
 // ***** UTILITIES ******
 
@@ -93,7 +65,7 @@ async function ifSteveIsSpeakingPlayGuileTheme(user) {
   const STEVE_USER_ID = 126889288624373760;
   const MY_ID = 223303701152923649;
   if (user.id == STEVE_USER_ID && user.channelID != null && allowGuileWhenSteveConnects ) {
-    playMp3(songPaths.guile); 
+    voiceConnection = playMp3(songPaths.guile, shlandsWaitingRoom); 
   }
 }
 
@@ -107,11 +79,7 @@ exports.setAllowGuileWhenSteveConnects = async (arg) => {
   } 
 } 
 
-exports.getAllowGuileWhenSteveConnects = async () => {
-  return allowGuileWhenSteveConnects;
-}
-
-//TODO Extract the song paths to an enum, and allow the express server to just use playMp3 
-exports.playINeedAHero = async () => {
-  playMp3(songPaths.hero); 
+//This allows the API to play songs without understanding channel or connections.
+exports.playMp3 = async (songPath) => {
+  voiceConnection = playMp3(songPath, shlandsWaitingRoom); 
 }
