@@ -1,12 +1,9 @@
 
 const Discord = require("discord.js");
 const { prefix, token } = require("./config.json");
+const songPaths = require("./utilities/song-paths.json");
 
 const client = new Discord.Client();
-
-const heroSongPath = './resources/i_need_a_hero.mp3';
-const guileSongPath = './resources/guile.mp3';
-const chariotsSongPath = './resources/chariots.mp3';
 
 var clientInitialized = false;
 var allowGuileWhenSteveConnects = false; 
@@ -32,13 +29,13 @@ exports.initializeClient = async () => {
         stopPlaying();
         return;
     } else if (message.content.startsWith(`${prefix}hero`)) {
-        playMp3(heroSongPath);
+        playMp3(songPaths.hero);
         return;
     } else if (message.content.startsWith(`${prefix}guile`)) {
-        playMp3(guileSongPath);
+        playMp3(songPaths.guile);
         return;
     } else if (message.content.startsWith(`${prefix}chariots`)) {
-        playMp3(chariotsSongPath);
+        playMp3(songPaths.chariots);
         return;
     } else if (message.content.startsWith(`${prefix}steve`)) {
         const splitArr = message.content.split(' ');
@@ -96,7 +93,7 @@ async function ifSteveIsSpeakingPlayGuileTheme(user) {
   const STEVE_USER_ID = 126889288624373760;
   const MY_ID = 223303701152923649;
   if (user.id == STEVE_USER_ID && user.channelID != null && allowGuileWhenSteveConnects ) {
-    playMp3(guileSongPath); 
+    playMp3(songPaths.guile); 
   }
 }
 
@@ -116,5 +113,5 @@ exports.getAllowGuileWhenSteveConnects = async () => {
 
 //TODO Extract the song paths to an enum, and allow the express server to just use playMp3 
 exports.playINeedAHero = async () => {
-  playMp3(heroSongPath); 
+  playMp3(songPaths.hero); 
 }

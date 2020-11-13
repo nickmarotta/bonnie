@@ -1,0 +1,5 @@
+{
+    "hero": "./resources/i_need_a_hero.mp3",
+    "guile": "./resources/guile.mp3",
+    "chariots": "./resources/chariots.mp3"
+}
