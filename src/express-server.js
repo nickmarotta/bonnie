@@ -25,6 +25,13 @@ app.get('/hero', function (req, res) {
   res.send(`I've got 5 jabronis, comin' right up.`)
 })
 
+// Route that receives a GET request to /hero
+app.get('/x', function (req, res) {
+  discord.playMp3(songPaths.dmx); 
+  res.set('Content-Type', 'text/plain')
+  res.send(`Give it to em.`)
+})
+
 // HealthCheck
 app.get('/ping', function (req, res) {
   res.set('Content-Type', 'text/plain')

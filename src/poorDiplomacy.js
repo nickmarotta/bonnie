@@ -50,6 +50,7 @@ exports.initializeClient = async () => {
 
   client.on("voiceStateUpdate", function(oldMember, newMember) {
       ifSteveIsSpeakingPlayGuileTheme(newMember); 
+      ifAlIsSpeakingPlayDMX(newMember);
   });
 
   await client.login(token);
@@ -66,6 +67,15 @@ async function ifSteveIsSpeakingPlayGuileTheme(user) {
   const MY_ID = 223303701152923649;
   if (user.id == STEVE_USER_ID && user.channelID != null && allowGuileWhenSteveConnects ) {
     voiceConnection = playMp3(songPaths.guile, shlandsWaitingRoom); 
+  }
+}
+
+async function ifAlIsSpeakingPlayDMX(user) {
+  const AL_USER_ID = 223597907444498432;
+
+  if (user.id == AL_USER_ID && user.channelID != null ) {
+    voiceConnection = playMp3(songPaths.dmx, shlandsWaitingRoom); 
+    console.log("Al entered");
   }
 }
 

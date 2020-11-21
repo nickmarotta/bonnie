@@ -4,7 +4,7 @@ exports.playMp3 = async (mp3Path, voiceChannel) => {
       const dispatcher = voiceConnection
       .play(mp3Path)
       .on("finish", () => {
-        console.log(mp3Path);
+        console.log(mp3Path + " finished playing.");
         voiceChannel.leave();
       })
       .on("error", error => {
@@ -15,8 +15,9 @@ exports.playMp3 = async (mp3Path, voiceChannel) => {
       return voiceConnection;
 
     } catch (err) {
+      console.log("Caught an error while trying to play an mp3.");
       console.log(err);
-      return voiceChannel.send(err);
+      return voiceConnection;
     }
   }
 

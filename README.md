@@ -24,6 +24,8 @@ Prep for deploy with this:
 ```sh
 docker build -t nickmarotta/bonnie .
 ```
+!!! YOU NEED TO DELETE THE NODE MODULES DIRECTORY BEFORE YOU BUILD!! OTHERWISE THE APP DOESNT WORK!!!
+
 
 Push the image with 
 ```shell
