@@ -65,17 +65,26 @@ exports.initializeClient = async () => {
 async function ifSteveIsSpeakingPlayGuileTheme(user) {
   const STEVE_USER_ID = 126889288624373760;
   const MY_ID = 223303701152923649;
-  if (user.id == STEVE_USER_ID && user.channelID != null && allowGuileWhenSteveConnects ) {
+  if (user.id == STEVE_USER_ID 
+      && user.channelID != null 
+      && allowGuileWhenSteveConnects 
+      && user.channelID == shlandsWaitingRoom) {
+
     voiceConnection = playMp3(songPaths.guile, shlandsWaitingRoom); 
+
   }
 }
 
 async function ifAlIsSpeakingPlayDMX(user) {
   const AL_USER_ID = 223597907444498432;
 
-  if (user.id == AL_USER_ID && user.channelID != null ) {
+  if (user.id == AL_USER_ID 
+      && user.channelID != null 
+      && user.channelID == shlandsWaitingRoom) {
+
     voiceConnection = playMp3(songPaths.dmx, shlandsWaitingRoom); 
     console.log("Al entered");
+
   }
 }
 
