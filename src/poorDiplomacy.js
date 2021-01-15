@@ -53,16 +53,12 @@ exports.initializeClient = async () => {
     const AL_USER_ID = 223597907444498432;
     const STEVE_USER_ID = 126889288624373760;
 
-    const userHasEnteredChannel = oldMember.channelID === null && newMember.channelID !== null;
-    console.log(userHasEnteredChannel);
-    console.log(`old channel: ${oldMember.channelID}`);
-    console.log(`new channel: ${newMember.channelID}`);
-
+    const userHasEnteredChannel = (oldMember.channelID === null || oldMember.channelID === undefined) && newMember.channelID !== null;
 
     if(userHasEnteredChannel) {
       if(newMember.id == STEVE_USER_ID && allowGuileWhenSteveConnects)
         voiceConnection = playMp3(songPaths.guile, shlandsWaitingRoom); 
-      if(newMember.id == NICK_USER_ID)
+      if(newMember.id == AL_USER_ID)
         voiceConnection = playMp3(songPaths.dmx, shlandsWaitingRoom); 
     }
   });
