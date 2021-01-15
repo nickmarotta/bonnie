@@ -49,8 +49,22 @@ exports.initializeClient = async () => {
   });
 
   client.on("voiceStateUpdate", function(oldMember, newMember) {
-      ifSteveIsSpeakingPlayGuileTheme(newMember); 
-      ifAlIsSpeakingPlayDMX(newMember);
+    const NICK_USER_ID = 223303701152923649
+    const AL_USER_ID = 223597907444498432;
+    const STEVE_USER_ID = 126889288624373760;
+
+    const userHasEnteredChannel = oldMember.channelID === null && newMember.channelID !== null;
+    console.log(userHasEnteredChannel);
+    console.log(`old channel: ${oldMember.channelID}`);
+    console.log(`new channel: ${newMember.channelID}`);
+
+
+    if(userHasEnteredChannel) {
+      if(newMember.id == STEVE_USER_ID && allowGuileWhenSteveConnects)
+        voiceConnection = playMp3(songPaths.guile, shlandsWaitingRoom); 
+      if(newMember.id == NICK_USER_ID)
+        voiceConnection = playMp3(songPaths.dmx, shlandsWaitingRoom); 
+    }
   });
 
   await client.login(token);
@@ -61,32 +75,6 @@ exports.initializeClient = async () => {
 }
 
 // ***** UTILITIES ******
-
-async function ifSteveIsSpeakingPlayGuileTheme(user) {
-  const STEVE_USER_ID = 126889288624373760;
-  const MY_ID = 223303701152923649;
-  if (user.id == STEVE_USER_ID 
-      && user.channelID != null 
-      && allowGuileWhenSteveConnects 
-      && user.channelID == shlandsWaitingRoom) {
-
-    voiceConnection = playMp3(songPaths.guile, shlandsWaitingRoom); 
-
-  }
-}
-
-async function ifAlIsSpeakingPlayDMX(user) {
-  const AL_USER_ID = 223597907444498432;
-
-  if (user.id == AL_USER_ID 
-      && user.channelID != null 
-      && user.channelID == shlandsWaitingRoom) {
-
-    voiceConnection = playMp3(songPaths.dmx, shlandsWaitingRoom); 
-    console.log("Al entered");
-
-  }
-}
 
 exports.setAllowGuileWhenSteveConnects = async (arg) => {
   if (arg == 'true' || arg == 1) {
